@@ -26,6 +26,7 @@ import { executeTemplate } from "./core/template/templateParser";
 import { NewNoteModal } from "./suggesters/NewNoteModal";
 import { file_exists } from "./utils/files";
 import { FormPickerModal } from "./suggesters/FormPickerModal";
+import { FormImportModal } from "./views/FormImportView";
 
 type ViewType = typeof EDIT_FORM_VIEW | typeof MANAGE_FORMS_VIEW;
 
@@ -40,7 +41,7 @@ function notifyParsingErrors(errors: InvalidData[]) {
         return;
     }
     log_notice(
-        "Some forms could not be parsed",
+        "⚠️ Some forms could not be parsed ⚠️",
         `We found some invalid data while parsing the form settings, please take a look at the following errors: 
             ${errors.join("\n")}`,
     );
@@ -91,6 +92,16 @@ export default class ModalFormPlugin extends Plugin {
             return;
         }
         await this.activateView(EDIT_FORM_VIEW, formDefinition);
+    }
+
+    openImportFormModal() {
+        const importModal = new FormImportModal(this.app, {
+            createForm: (form) => {
+                importModal.close();
+                this.activateView(EDIT_FORM_VIEW, form);
+            },
+        });
+        importModal.open();
     }
 
     closeEditForm() {
@@ -239,6 +250,12 @@ export default class ModalFormPlugin extends Plugin {
                     this.activateView(EDIT_FORM_VIEW, formToEdit);
                 }).open();
             },
+        });
+
+        this.addCommand({
+            id: "import-form",
+            name: "Import form",
+            callback: () => this.openImportFormModal,
         });
 
         // This adds a settings tab so the user can configure various aspects of the plugin
