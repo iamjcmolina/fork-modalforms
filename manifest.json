@@ -1,9 +1,9 @@
 {
-	"id": "modalforms",
-	"name": "Modal forms",
+	"id": "fork-modalforms",
+	"name": "Formularios",
 	"minAppVersion": "0.15.0",
 	"description": "Define forms for filling data that you will be able to open from anywhere you can run JS",
-	"author": "Danielo Rodriguez",
+	"author": "Carlos Molina",
 	"authorUrl": "https://danielo.es",
 	"fundingUrl": "https://www.buymeacoffee.com/danielo515",
 	"isDesktopOnly": false,

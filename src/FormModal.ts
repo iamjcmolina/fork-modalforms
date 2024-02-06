@@ -216,6 +216,7 @@ export class FormModal extends Modal {
                                 fieldInput.options.forEach((option) => {
                                     element.addOption(option.value, option.label);
                                 });
+                                element.setValue(String(initialValue));
                                 fieldStore.value.set(element.getValue());
                                 element.onChange(fieldStore.value.set);
                             });
@@ -282,7 +283,9 @@ export class FormModal extends Modal {
         });
 
         new Setting(contentEl).addButton((btn) =>
-            btn.setButtonText("Submit").setCta().onClick(this.formEngine.triggerSubmit),
+            btn.setButtonText("Aceptar").setCta().onClick(this.formEngine.triggerSubmit),
+        ).addButton((btn) =>
+            btn.setButtonText("Cancelar").setCta().onClick( () => this.close()),
         );
 
         const submitEnterCallback = (evt: KeyboardEvent) => {
